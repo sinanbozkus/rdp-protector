@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using System.Diagnostics
+@using System.Collections.Generic
+
+@model List<EventLogEntry>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header font-weight-bold">
+                Audit Logs (Last 100 Records)
+            </div>
+            <div class="card-body">
+                <table class="table card-table table-striped table-vcenter">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Source</th>
+                            <th>EventID</th>
+                            <th style="width:150px;">Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @switch (item.EntryType)
+                                    {
+                                        case EventLogEntryType.Error:
+                                            <span class="badge p-2 badge-danger">@item.EntryType</span>
+                                            break;
+                                        case EventLogEntryType.Warning:
+                                            <span class="badge p-2 badge-warning">@item.EntryType</span>
+                                            break;
+                                        case EventLogEntryType.Information:
+                                            <span class="badge p-2 badge-info">@item.EntryType</span>
+                                            break;
+                                        case EventLogEntryType.SuccessAudit:
+                                            <span class="badge p-2 badge-success">@item.EntryType</span>
+                                            break;
+                                        case EventLogEntryType.FailureAudit:
+                                            <span class="badge p-2 badge-danger">@item.EntryType</span>
+                                            break;
+                                        default:
+                                            <span class="badge p-2 badge-default">@item.EntryType</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>@item.TimeGenerated</td>
+                                <td>@item.Source</td>
+                                <td>@item.EventID</td>
+                                <td><button type="button" class="btn btn-secondary"><i class="fe fe-search"></i> Show</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

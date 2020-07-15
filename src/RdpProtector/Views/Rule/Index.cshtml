@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using System.Diagnostics
+@using System.Collections.Generic
+
+@model List<WindowsFirewallHelper.IRule>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header font-weight-bold">
+                Windows Defender Firewall Rules
+            </div>
+            <div class="card-body">
+                <table class="table card-table table-striped table-vcenter">
+                    <thead>
+                        <tr>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th>D</th>
+                            <th style="width:150px;">Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.IsEnable - @item.Name - @item.Scope</td>
+                                <td>@item.Protocol</td>
+                                <td>@{if(item.LocalPorts.Any()) { @item.LocalPorts[0] }}</td>
+                                <td>@{ if(item.RemotePorts.Any()) { @item.RemotePorts[0] }}</td>
+                                <td><button type="button" class="btn btn-secondary"><i class="fe fe-search"></i> Show</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
